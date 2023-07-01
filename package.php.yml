@@ -1,0 +1,21 @@
+name: jphp-utils-ext
+version: 1.0.0
+deps:
+  jphp-core: '*'
+  jphp-zend-ext: '*'
+  jphp-gui-ext: '*'
+devDeps:
+  dn-bundle-plugin: '*'
+plugins: [ App, Doc ]
+sources:
+  - src
+includes:
+  - index.php
+develnext-bundle:
+  version: 1.0.0
+  name: jphp-utils-ext
+  author: silentrs
+  icon: develnext/bundle/utils/icon32.png
+  description: Some utils for jphp and DevelNext
+  group: other
+  class: develnext\bundle\util\UtilBundle
