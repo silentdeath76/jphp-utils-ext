@@ -3,14 +3,11 @@ version: 1.0.0
 deps:
   jphp-core: '*'
   jphp-zend-ext: '*'
-  jphp-gui-ext: '*'
 devDeps:
   dn-bundle-plugin: '*'
 plugins: [ App, Doc ]
 sources:
   - src
-includes:
-  - index.php
 develnext-bundle:
   version: 1.0.0
   name: jphp-utils-ext
@@ -19,3 +16,13 @@ develnext-bundle:
   description: Some utils for jphp and DevelNext
   group: other
   class: develnext\bundle\util\UtilBundle
+config:
+  ignore:
+    - /*.ini
+    - /sandbox/**
+    - /*.iml
+    - /.git/**
+    - /examples/**
+    - /.idea/**
+    - /bundle/**
+    - /src-bundle/**
