@@ -4,6 +4,8 @@
 namespace utils\helpers\gui;
 
 
+use php\lang\Thread;
+use php\lang\ThreadPool;
 use php\util\Configuration;
 use php\gui\{UXForm, UXScreen};
 
@@ -18,11 +20,6 @@ class WindowState
     {
         $form->maximized = $config->getBoolean("maximized", false);
         if ($form->maximized === true) return;
-        echo "INFO try load state\n";
-
-        var_dump($changeLayoutSize);
-        var_dump($config->get("width", 600));
-        var_dump($config->get("height", 600));
 
         $form->width = $config->get("width", 600);
         $form->height = $config->get("height", 400);

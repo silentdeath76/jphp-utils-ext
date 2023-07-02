@@ -4,7 +4,7 @@
 namespace utils\helpers\gui;
 
 
-use php\gui\{UXContextMenu, UXImage, UXImageView, UXLabel, UXMenu, UXMenuBar, UXMenuItem, UXNode};
+use php\gui\{UXContextMenu, UXImage, UXImageView, UXLabel, UXLabelEx, UXMenu, UXMenuBar, UXMenuItem, UXNode};
 use php\lang\IllegalArgumentException;
 use php\util\Configuration;
 
@@ -57,8 +57,10 @@ class ContextMenuHelper
      */
     public function addItem($text, $callback, UXNode $graphic = null)
     {
-        $this->target->items->add($node = new UXMenuItem($text));
-        $this->setGraphic($node, $graphic);
+        $this->target->items->add($node = new UXMenuItem());
+        $this->setGraphic($node, $label = new UXLabelEx($text));
+        $this->setGraphic($label, $graphic);
+        $label->autoSize = true;
         $node->on('action', $callback);
 
         return $node;
@@ -80,8 +82,9 @@ class ContextMenuHelper
         }
 
         $this->target->{$param}->add($node = new UXMenu());
-        $this->setGraphic($node, $label = new UXLabel($text));
-        $label->graphic = $graphic; // ??
+        $this->setGraphic($node, $label = new UXLabelEx($text));
+        $label->autoSize = true;
+        $this->setGraphic($label, $graphic); // ??
 
         if ($callback !== null) {
             $label->on("click", $callback);
@@ -114,6 +117,12 @@ class ContextMenuHelper
     {
         if ($graphic !== null) {
             $node->graphic = $graphic;
+        } else {
+            $image = base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX/TQBcNTh/AAAAAXRSTlMAQObYZgAAAApJREFUeJxjYgAAAAYAAzY3fKgAAAAASUVORK5CYII=');
+            $imageTransparent = new \php\io\MemoryStream();
+            $imageTransparent->write($image);
+            $imageTransparent->seek(0);
+            $node->graphic = $this->makeIcon($imageTransparent);
         }
 
         if ($this->config instanceof Configuration) $this->configurate($node);
