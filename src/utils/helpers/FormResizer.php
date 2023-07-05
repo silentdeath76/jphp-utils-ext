@@ -88,105 +88,126 @@ class FormResizer
         $width = $this->config["width"] ?: 7;
         $height = $this->config["height"] ?: 7;
 
-        $robot = new Robot();
 
-        $mouseDownEvent = function (UXEvent $e) use ($robot, $form) {
+        $mouseDownEvent = function (UXEvent $e) use ($form) {
             $this->clickPos = [$e->x, $e->y];
-            $this->screenClickPos = $robot->position;
+
+            $x = $form->x + $e->x;
+            $y = $form->y + $e->y;
+
+            $this->screenClickPos = [$x, $y];
             $this->formSize = [$form->width, $form->height];
         };
 
+        // bottom left top
         $left = self::createPoint($mouseDownEvent, [$width, $form->height], [0, 0], self::$debug);
         $left->cursor = "H_RESIZE";
         $left->anchors = ['left' => 0, 'top' => 0, 'bottom' => 0];
-        $left->on("mouseDrag", function (UXMouseEvent $e) use ($robot, $form) {
-            $form->x = $robot->position[0] - $this->clickPos[0];
-            $form->width = $this->formSize[0] + ($this->screenClickPos[0] - $robot->position[0]);
+        $left->on("mouseDrag", function (UXMouseEvent $e) use ($form) {
+            $x = $form->x + $e->x;
+
+            $form->x = $x - $this->clickPos[0];
+            $form->width = $this->formSize[0] + ($this->screenClickPos[0] - $x);
         }, "FormResizer");
 
         $form->add($left);
 
-
+        // left top right
         $top = self::createPoint($mouseDownEvent, [$form->width, $height], [0, 0], self::$debug);
         $top->cursor = "V_RESIZE";
         $top->anchors = ['right' => 0, 'left' => 0, 'top' => 0];
-        $top->on("mouseDrag", function (UXMouseEvent $e) use ($robot, $form) {
-            $form->y = $robot->position[1] - $this->clickPos[1];
-            $form->height = $this->formSize[1] + ($this->screenClickPos[1] - $robot->position[1]);
+        $top->on("mouseDrag", function (UXMouseEvent $e) use ($form) {
+            $y = $form->y + $e->y;
+
+            $form->y = $y - $this->clickPos[1];
+            $form->height = $this->formSize[1] + ($this->screenClickPos[1] - $y);
         }, "FormResizer");
 
         $form->add($top);
 
-
+        // top right bottom
         $right = self::createPoint($mouseDownEvent, [$width, $form->height], [$form->width - $width, 0], self::$debug);
         $right->cursor = "H_RESIZE";
         $right->anchors = ['right' => 0, 'top' => 0, 'bottom' => 0];
-        $right->on("mouseDrag", function (UXMouseEvent $e) use ($robot, $form) {
-            $form->width = $this->formSize[0] - ($this->screenClickPos[0] - $robot->position[0]);
+        $right->on("mouseDrag", function (UXMouseEvent $e) use ($form) {
+            $x = $e->screenX - $this->formSize[0];
+
+            $form->width = $this->formSize[0] - ($this->screenClickPos[0] - $x);
         }, "FormResizer");
 
         $form->add($right);
 
-
+        // right bottom left
         $down = self::createPoint($mouseDownEvent, [$this->width, $height], [$form->width - $width, $form->height - $height], self::$debug);
         $down->cursor = "V_RESIZE";
         $down->anchors = ['left' => 0, 'right' => 0, 'bottom' => 0];
-        $down->on("mouseDrag", function (UXMouseEvent $e) use ($robot, $form) {
-            $form->height = $this->formSize[1] - ($this->screenClickPos[1] - $robot->position[1]);
+        $down->on("mouseDrag", function (UXMouseEvent $e) use ($form) {
+            $y = $e->screenY - $this->formSize[1];
+
+            $form->height = $this->formSize[1] - ($this->screenClickPos[1] - $y);
         }, "FormResizer");
-        $down->on("click", function () use ($form, $width, $height) {
-            var_dump($form->width - $width, $form->height - $height);
-        });
 
         $form->add($down);
 
-
+        // left top
         $leftTop = self::createPoint($mouseDownEvent, [$width, $height], [0, 0], self::$debug);
         $leftTop->cursor = "NW_RESIZE";
         $leftTop->anchors = ['left' => 0, 'top' => 0];
 
-        $leftTop->on("mouseDrag", function (UXMouseEvent $e) use ($robot, $form) {
-            $form->x = $robot->position[0] - $this->clickPos[0];
-            $form->width = $this->formSize[0] + ($this->screenClickPos[0] - $robot->position[0]);
+        $leftTop->on("mouseDrag", function (UXMouseEvent $e) use ($form) {
+            $x = $form->x + $e->x;
+            $y = $form->y + $e->y;
 
-            $form->y = $robot->position[1] - ($this->clickPos[1]);
-            $form->height = $this->formSize[1] + ($this->screenClickPos[1] - $robot->position[1]);
+            $form->x = $x - $this->clickPos[0];
+            $form->width = $this->formSize[0] + ($this->screenClickPos[0] - $x);
+
+            $form->y = $y - ($this->clickPos[1]);
+            $form->height = $this->formSize[1] + ($this->screenClickPos[1] - $y);
         }, "FormResizer");
 
         $form->add($leftTop);
 
-
+        // top right
         $topRight = self::createPoint($mouseDownEvent, [$width, $height], [$form->width, 0], self::$debug);
         $topRight->cursor = "NE_RESIZE";
         $topRight->anchors = ['top' => 0, 'right' => 0];
 
-        $topRight->on("mouseDrag", function (UXMouseEvent $e) use ($robot, $form) {
-            $form->y = $robot->position[1] - $this->clickPos[1];
-            $form->width = $this->formSize[0] - ($this->screenClickPos[0] - $robot->position[0]);
-            $form->height = $this->formSize[1] + ($this->screenClickPos[1] - $robot->position[1]);
+        $topRight->on("mouseDrag", function (UXMouseEvent $e) use ($form) {
+            $x = $e->screenX - $this->formSize[0];
+            $y = $form->y + $e->y;
+
+            $form->y = $y - $this->clickPos[1];
+            $form->width = $this->formSize[0] - ($this->screenClickPos[0] - $x);
+            $form->height = $this->formSize[1] + ($this->screenClickPos[1] - $y);
         }, "FormResizer");
 
         $form->add($topRight);
 
-
+        // right bottom
         $rightDown = self::createPoint($mouseDownEvent, [$width, $height], [$form->width, $form->height], self::$debug);
         $rightDown->cursor = "NW_RESIZE";
         $rightDown->anchors = ['right' => 0, 'bottom' => 0];
-        $rightDown->on("mouseDrag", function (UXMouseEvent $e) use ($robot, $form) {
-            $form->width = $this->formSize[0] - ($this->screenClickPos[0] - $robot->position[0]);
-            $form->height = $this->formSize[1] - ($this->screenClickPos[1] - $robot->position[1]);
+        $rightDown->on("mouseDrag", function (UXMouseEvent $e) use ($form) {
+            $x = $e->screenX - $this->formSize[0];
+            $y = $e->screenY - $this->formSize[1];
+
+            $form->width = $this->formSize[0] - ($this->screenClickPos[0] - $x);
+            $form->height = $this->formSize[1] - ($this->screenClickPos[1] - $y);
         }, "FormResizer");
 
         $form->add($rightDown);
 
-
+        // bottom left
         $leftDown = self::createPoint($mouseDownEvent, [$width, $height], [0, $form->height], self::$debug);
         $leftDown->cursor = "NE_RESIZE";
         $leftDown->anchors = ['left' => 0, 'bottom' => 0];
-        $leftDown->on("mouseDrag", function () use ($robot, $form) {
-            $form->x = $robot->position[0] - $this->clickPos[0];
-            $form->width = $this->formSize[0] + ($this->screenClickPos[0] - $robot->position[0]);
-            $form->height = $this->formSize[1] - ($this->screenClickPos[1] - $robot->position[1]);
+        $leftDown->on("mouseDrag", function (UXMouseEvent $e) use ($form) {
+            $x = $form->x + $e->x;
+            $y = $e->screenY - $this->formSize[1];
+
+            $form->x = $x - $this->clickPos[0];
+            $form->width = $this->formSize[0] + ($this->screenClickPos[0] - $x);
+            $form->height = $this->formSize[1] - ($this->screenClickPos[1] - $y);
         }, "FormResizer");
 
         $form->add($leftDown);
@@ -242,7 +263,7 @@ class FormResizer
      * @param int $width
      * @param int $height
      */
-    public function minSize($width, $height)
+    public function minSize(int $width, int $height)
     {
         $this->form->observer("width")->addListener(function ($val) use ($width) {
             if ($this->form->width < $width) {
