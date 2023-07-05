@@ -1,0 +1,35 @@
+dependencies:
+  jphp-core:
+    version: 1.3.1
+    info: [
+      ]
+  jphp-runtime:
+    version: 1.3.1
+    info: [
+      ]
+  jphp-gui-ext:
+    version: 3.0.1
+    info: [
+      ]
+  jphp-xml-ext:
+    version: 1.0.0
+    info: [
+      ]
+  jphp-graphic-ext:
+    version: 1.0.0
+    info: [
+      ]
+  jphp-utils-ext:
+    version: 1.0.0
+    info:
+      realVersion: master
+      hash: 846301ad1b0fca1770bea99c1b14b8013f2418e2
+      repo: git+https://github.com/silentdeath76/jphp-utils-ext
+  jphp-zend-ext:
+    version: 1.1.0
+    info: [
+      ]
+  jphp-json-ext:
+    version: 1.0.0
+    info: [
+      ]
