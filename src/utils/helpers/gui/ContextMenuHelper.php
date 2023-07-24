@@ -4,10 +4,15 @@
 namespace utils\helpers\gui;
 
 
-use php\gui\{UXContextMenu, UXImage, UXImageView, UXLabel, UXLabelEx, UXMenu, UXMenuBar, UXMenuItem, UXNode};
+use php\gui\{UXContextMenu, UXImage, UXImageView, UXLabelEx, UXMenu, UXMenuBar, UXMenuItem, UXNode};
 use php\lang\IllegalArgumentException;
 use php\util\Configuration;
 
+/**
+ * Class ContextMenuHelper
+ * @package utils\helpers\gui
+ * @packages helpers
+ */
 class ContextMenuHelper
 {
     const GRAPHIC_WIDTH = 'graphic.width';

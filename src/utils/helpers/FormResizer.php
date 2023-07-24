@@ -6,6 +6,11 @@ namespace utils\helpers;
 use php\gui\{event\UXEvent, event\UXMouseEvent, shape\UXRectangle, UXForm, UXImage, UXImageArea, UXNode};
 use php\io\MemoryStream;
 
+/**
+ * Class FormResizer
+ * @package utils\helpers
+ * @packages helpers
+ */
 class FormResizer
 {
     public static $debug = false;

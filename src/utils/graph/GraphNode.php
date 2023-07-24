@@ -3,7 +3,11 @@
 
 namespace utils\graph;
 
-
+/**
+ * Class GraphNode
+ * @package utils\graph
+ * @packages helpers
+ */
 class GraphNode
 {
     private $name;

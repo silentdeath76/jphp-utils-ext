@@ -3,7 +3,11 @@
 
 namespace utils\graph;
 
-
+/**
+ * Class Graph
+ * @package utils\graph
+ * @packages helpers
+ */
 class Graph
 {
     private $edges = [];

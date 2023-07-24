@@ -7,6 +7,11 @@ namespace utils\helpers\gui;
 use php\gui\UXTreeItem;
 use php\lib\str;
 
+/**
+ * Class TreeHelper
+ * @package utils\helpers\gui
+ * @packages helpers
+ */
 class TreeHelper
 {
     function makeTree(UXTreeItem $root, array $items, callable $callback)

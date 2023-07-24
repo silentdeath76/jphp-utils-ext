@@ -1,0 +1,12 @@
+name: tree-example
+version: 1.0.0
+deps:
+  jphp-core: '*'
+  jphp-gui-ext: '*'
+  jphp-utils-ext: git+https://github.com/silentdeath76/jphp-utils-ext
+plugins:
+- App
+sources:
+- src
+includes:
+- index.php

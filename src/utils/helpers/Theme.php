@@ -6,6 +6,11 @@ namespace utils\helpers;
 
 use php\io\FileStream;
 
+/**
+ * Class Theme
+ * @package utils\helpers
+ * @packages helpers
+ */
 class Theme
 {
     protected $vars = [];
@@ -89,8 +94,7 @@ class Theme
      */
     public static function applyTo($target, $path)
     {
-        $path = 'file:///' . str_replace('\\', '/', $path);
-        $target->addStylesheet($path);
+        $target->addStylesheet(self::makeLocalPath($path));
     }
 
     /**
@@ -99,8 +103,12 @@ class Theme
      */
     public static function removeFrom($target, $path)
     {
-        $path = 'file:///' . str_replace('\\', '/', $path);
-        $target->removeStylesheet($path);
+        $target->removeStylesheet(self::makeLocalPath($path));
+    }
+
+    private static function makeLocalPath($path): string
+    {
+        return 'file:///' . str_replace('\\', '/', $path);
     }
 
     /**

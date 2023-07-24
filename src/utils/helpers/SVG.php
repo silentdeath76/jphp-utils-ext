@@ -9,6 +9,11 @@ use php\io\Stream;
 use php\util\Regex;
 use php\xml\XmlProcessor;
 
+/**
+ * Class SVG
+ * @package utils\helpers
+ * @packages helpers
+ */
 class SVG
 {
     public $scale;

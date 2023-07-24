@@ -7,6 +7,11 @@ use Exception;
 use php\lang\Thread;
 use php\util\SharedValue;
 
+/**
+ * Class Mutex
+ * @package utils\helpers
+ * @packages helpers
+ */
 class Mutex
 {
     /**
