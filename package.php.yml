@@ -9,8 +9,7 @@ devDeps:
 plugins: [ App, Doc ]
 sources:
   - src
-includes:
-  - index.php
+
 develnext-bundle:
   version: 1.0.0
   name: utils
