@@ -190,7 +190,7 @@ class FormResizer
 
         // right bottom
         $rightDown = self::createPoint($mouseDownEvent, [$width, $height], [$form->width, $form->height], self::$debug);
-        $rightDown->cursor = "NW_RESIZE";
+        $rightDown->cursor = "SE_RESIZE";
         $rightDown->anchors = ['right' => 0, 'bottom' => 0];
         $rightDown->on("mouseDrag", function (UXMouseEvent $e) use ($form) {
             $x = $e->screenX - $this->formSize[0];
@@ -204,7 +204,7 @@ class FormResizer
 
         // bottom left
         $leftDown = self::createPoint($mouseDownEvent, [$width, $height], [0, $form->height], self::$debug);
-        $leftDown->cursor = "NE_RESIZE";
+        $leftDown->cursor = "SW_RESIZE";
         $leftDown->anchors = ['left' => 0, 'bottom' => 0];
         $leftDown->on("mouseDrag", function (UXMouseEvent $e) use ($form) {
             $x = $form->x + $e->x;
