@@ -8,7 +8,7 @@ use php\io\MemoryStream;
 
 /**
  * Class FormResizer
- * @package utils\helpers
+ * @package utils\helpers\gui
  * @packages helpers
  */
 class FormResizer
@@ -28,6 +28,11 @@ class FormResizer
      * @var UXForm
      */
     private $form;
+
+    /**
+     * @var array
+     */
+    private $formSize;
 
     /**
      * @param \php\gui\UXForm $form
@@ -67,7 +72,7 @@ class FormResizer
         });
 
 
-        $this->create();
+        $this->createControls();
     }
 
     /**
@@ -78,9 +83,11 @@ class FormResizer
         $node->text = $this->form->title;
     }
 
-    private function create()
+    /**
+     * @throws \php\lang\IllegalStateException
+     */
+    private function createControls()
     {
-        $form = $this->form;
         /**
          * cursors
          * N_RESIZE, S_RESIZE, V_RESIZE - top-down
@@ -94,137 +101,140 @@ class FormResizer
         $height = $this->config["height"] ?: 7;
 
 
-        $mouseDownEvent = function (UXEvent $e) use ($form) {
+        $mouseDownEvent = function (UXEvent $e) {
             $this->clickPos = [$e->x, $e->y];
 
-            $x = $form->x + $e->x;
-            $y = $form->y + $e->y;
+            $x = $this->form->x + $e->x;
+            $y = $this->form->y + $e->y;
 
             $this->screenClickPos = [$x, $y];
-            $this->formSize = [$form->width, $form->height];
+            $this->formSize = [$this->form->width, $this->form->height];
         };
 
         // bottom left top
-        $left = self::createPoint($mouseDownEvent, [$width, $form->height], [0, 0], self::$debug);
+        $left = self::createPoint($mouseDownEvent, [$width, $this->form->height], [0, 0], self::$debug);
         $left->cursor = "H_RESIZE";
         $left->anchors = ['left' => 0, 'top' => 0, 'bottom' => 0];
-        $left->on("mouseDrag", function (UXMouseEvent $e) use ($form) {
-            $x = $form->x + $e->x;
+        $left->on("mouseDrag", function (UXMouseEvent $e) {
+            $x = $e->screenX;
 
-            $form->x = $x - $this->clickPos[0];
-            $form->width = $this->formSize[0] + ($this->screenClickPos[0] - $x);
-        }, "FormResizer");
+            $this->form->x = $x - $this->clickPos[0];
+            $this->form->width = $this->formSize[0] + ($this->screenClickPos[0] - $x);
+        }, __CLASS__);
 
-        $form->add($left);
+        $this->form->add($left);
 
         // left top right
-        $top = self::createPoint($mouseDownEvent, [$form->width, $height], [0, 0], self::$debug);
+        $top = self::createPoint($mouseDownEvent, [$this->form->width, $height], [0, 0], self::$debug);
         $top->cursor = "V_RESIZE";
         $top->anchors = ['right' => 0, 'left' => 0, 'top' => 0];
-        $top->on("mouseDrag", function (UXMouseEvent $e) use ($form) {
-            $y = $form->y + $e->y;
+        $top->on("mouseDrag", function (UXMouseEvent $e) {
+            $y = $e->screenY;
 
-            $form->y = $y - $this->clickPos[1];
-            $form->height = $this->formSize[1] + ($this->screenClickPos[1] - $y);
-        }, "FormResizer");
+            $this->form->y = $y - $this->clickPos[1];
+            $this->form->height = $this->formSize[1] + ($this->screenClickPos[1] - $y);
+        }, __CLASS__);
 
-        $form->add($top);
+        $this->form->add($top);
 
         // top right bottom
-        $right = self::createPoint($mouseDownEvent, [$width, $form->height], [$form->width - $width, 0], self::$debug);
+        $right = self::createPoint($mouseDownEvent, [$width, $this->form->height], [$this->form->width - $width, 0], self::$debug);
         $right->cursor = "H_RESIZE";
         $right->anchors = ['right' => 0, 'top' => 0, 'bottom' => 0];
-        $right->on("mouseDrag", function (UXMouseEvent $e) use ($form) {
+        $right->on("mouseDrag", function (UXMouseEvent $e) {
             $x = $e->screenX - $this->formSize[0];
 
-            $form->width = $this->formSize[0] - ($this->screenClickPos[0] - $x);
-        }, "FormResizer");
+            $this->form->width = $this->formSize[0] - ($this->screenClickPos[0] - $x);
+        }, __CLASS__);
 
-        $form->add($right);
+        $this->form->add($right);
 
         // right bottom left
-        $down = self::createPoint($mouseDownEvent, [$this->width, $height], [$form->width - $width, $form->height - $height], self::$debug);
+        $down = self::createPoint($mouseDownEvent, [$this->form->width, $height], [$this->form->width - $width, $this->form->height - $height], self::$debug);
         $down->cursor = "V_RESIZE";
         $down->anchors = ['left' => 0, 'right' => 0, 'bottom' => 0];
-        $down->on("mouseDrag", function (UXMouseEvent $e) use ($form) {
+        $down->on("mouseDrag", function (UXMouseEvent $e) {
             $y = $e->screenY - $this->formSize[1];
 
-            $form->height = $this->formSize[1] - ($this->screenClickPos[1] - $y);
-        }, "FormResizer");
+            $this->form->height = $this->formSize[1] - ($this->screenClickPos[1] - $y);
+        }, __CLASS__);
 
-        $form->add($down);
+        $this->form->add($down);
 
         // left top
         $leftTop = self::createPoint($mouseDownEvent, [$width, $height], [0, 0], self::$debug);
         $leftTop->cursor = "NW_RESIZE";
         $leftTop->anchors = ['left' => 0, 'top' => 0];
 
-        $leftTop->on("mouseDrag", function (UXMouseEvent $e) use ($form) {
-            $x = $form->x + $e->x;
-            $y = $form->y + $e->y;
+        $leftTop->on("mouseDrag", function (UXMouseEvent $e) {
+            $x = $e->screenX;
+            $y = $e->screenY;
 
-            $form->x = $x - $this->clickPos[0];
-            $form->width = $this->formSize[0] + ($this->screenClickPos[0] - $x);
+            $this->form->x = $x - $this->clickPos[0];
+            $this->form->width = $this->formSize[0] + ($this->screenClickPos[0] - $x);
 
-            $form->y = $y - ($this->clickPos[1]);
-            $form->height = $this->formSize[1] + ($this->screenClickPos[1] - $y);
-        }, "FormResizer");
+            $this->form->y = $y - ($this->clickPos[1]);
+            $this->form->height = $this->formSize[1] + ($this->screenClickPos[1] - $y);
+        }, __CLASS__);
 
-        $form->add($leftTop);
+        $this->form->add($leftTop);
 
         // top right
-        $topRight = self::createPoint($mouseDownEvent, [$width, $height], [$form->width, 0], self::$debug);
+        $topRight = self::createPoint($mouseDownEvent, [$width, $height], [$this->form->width, 0], self::$debug);
         $topRight->cursor = "NE_RESIZE";
         $topRight->anchors = ['top' => 0, 'right' => 0];
 
-        $topRight->on("mouseDrag", function (UXMouseEvent $e) use ($form) {
+        $topRight->on("mouseDrag", function (UXMouseEvent $e) {
             $x = $e->screenX - $this->formSize[0];
-            $y = $form->y + $e->y;
+            $y = $e->screenY;
 
-            $form->y = $y - $this->clickPos[1];
-            $form->width = $this->formSize[0] - ($this->screenClickPos[0] - $x);
-            $form->height = $this->formSize[1] + ($this->screenClickPos[1] - $y);
-        }, "FormResizer");
+            $this->form->y = $y - $this->clickPos[1];
+            $this->form->width = $this->formSize[0] - ($this->screenClickPos[0] - $x);
+            $this->form->height = $this->formSize[1] + ($this->screenClickPos[1] - $y);
+        }, __CLASS__);
 
-        $form->add($topRight);
+        $this->form->add($topRight);
 
         // right bottom
-        $rightDown = self::createPoint($mouseDownEvent, [$width, $height], [$form->width, $form->height], self::$debug);
+        $rightDown = self::createPoint($mouseDownEvent, [$width, $height], [$this->form->width, $this->form->height], self::$debug);
         $rightDown->cursor = "SE_RESIZE";
         $rightDown->anchors = ['right' => 0, 'bottom' => 0];
-        $rightDown->on("mouseDrag", function (UXMouseEvent $e) use ($form) {
+        $rightDown->on("mouseDrag", function (UXMouseEvent $e) {
             $x = $e->screenX - $this->formSize[0];
             $y = $e->screenY - $this->formSize[1];
 
-            $form->width = $this->formSize[0] - ($this->screenClickPos[0] - $x);
-            $form->height = $this->formSize[1] - ($this->screenClickPos[1] - $y);
-        }, "FormResizer");
+            $this->form->width = $this->formSize[0] - ($this->screenClickPos[0] - $x);
+            $this->form->height = $this->formSize[1] - ($this->screenClickPos[1] - $y);
+        }, __CLASS__);
 
-        $form->add($rightDown);
+        $this->form->add($rightDown);
 
         // bottom left
-        $leftDown = self::createPoint($mouseDownEvent, [$width, $height], [0, $form->height], self::$debug);
+        $leftDown = self::createPoint($mouseDownEvent, [$width, $height], [0, $this->form->height], self::$debug);
         $leftDown->cursor = "SW_RESIZE";
         $leftDown->anchors = ['left' => 0, 'bottom' => 0];
-        $leftDown->on("mouseDrag", function (UXMouseEvent $e) use ($form) {
-            $x = $form->x + $e->x;
+        $leftDown->on("mouseDrag", function (UXMouseEvent $e) {
+            $x = $e->screenX;
             $y = $e->screenY - $this->formSize[1];
 
-            $form->x = $x - $this->clickPos[0];
-            $form->width = $this->formSize[0] + ($this->screenClickPos[0] - $x);
-            $form->height = $this->formSize[1] - ($this->screenClickPos[1] - $y);
-        }, "FormResizer");
+            $this->form->x = $x - $this->clickPos[0];
+            $this->form->width = $this->formSize[0] + ($this->screenClickPos[0] - $x);
+            $this->form->height = $this->formSize[1] - ($this->screenClickPos[1] - $y);
+        }, __CLASS__);
 
-        $form->add($leftDown);
+        $this->form->add($leftDown);
 
 
         $this->items = [$leftTop, $top, $topRight, $right, $rightDown, $down, $leftDown, $left];
     }
 
+    /**
+     * @throws \php\lang\IllegalStateException
+     */
     public function enable()
     {
         if ($this->disabled) {
-            $this->create();
+            $this->createControls();
 
             $this->disabled = false;
         }
@@ -232,7 +242,7 @@ class FormResizer
 
     public function disable()
     {
-        if (!$this->dissabed) {
+        if (!$this->disabled) {
             foreach ($this->items as $item) {
                 $item->free();
             }
@@ -259,7 +269,7 @@ class FormResizer
         $point->height = ($size["height"]) ?: $size[1];
         $point->x = ($position["x"]) ?: $position[0];
         $point->y = ($position["y"]) ?: $position[1];
-        $point->on("mouseDown", $callback, "FormResizer");
+        $point->on("mouseDown", $callback, __CLASS__);
 
         return $point;
     }
