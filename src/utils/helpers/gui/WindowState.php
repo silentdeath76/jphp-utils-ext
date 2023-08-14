@@ -32,11 +32,10 @@ class WindowState
         $form->y = $config->get("y", 0);
 
 
-
-        self::multiScreen($form, $config);
+        self::screenDetect($form, $config);
     }
 
-    private static function multiScreen(UXForm $form, Configuration $config)
+    public static function screenDetect(UXForm $form, Configuration $config)
     {
         $screens = UXScreen::getScreens();
 
@@ -61,13 +60,18 @@ class WindowState
             foreach (UXScreen::getScreens() as $screen) {
                 if (self::intersect($form, new ScreenDTO($screen->bounds))) {
                     $found = $screen;
+                    break;
                 }
             }
 
             if (!($found instanceof UXScreen)) {
                 $form->centerOnScreen();
             }
+        } else {
+            return UXScreen::getPrimary();
         }
+
+        return $found;
     }
 
     /**

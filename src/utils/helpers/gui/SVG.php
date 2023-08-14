@@ -11,7 +11,7 @@ use php\xml\XmlProcessor;
 
 /**
  * Class SVG
- * @package utils\helpers
+ * @package utils\helpers\gui
  * @packages helpers
  */
 class SVG

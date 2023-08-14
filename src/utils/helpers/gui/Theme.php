@@ -8,7 +8,7 @@ use php\io\FileStream;
 
 /**
  * Class Theme
- * @package utils\helpers
+ * @package utils\helpers\gui
  * @packages helpers
  */
 class Theme
