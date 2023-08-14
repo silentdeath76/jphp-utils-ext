@@ -1,0 +1,13 @@
+[classes]
+utils\graph\Graph
+utils\graph\GraphNode
+utils\helpers\gui\AbstractNode
+utils\helpers\gui\ContextMenuHelper
+utils\helpers\gui\ICustomNode
+utils\helpers\gui\TreeHelper
+utils\helpers\gui\WindowState
+utils\helpers\gui\FormResizer
+utils\helpers\gui\SVG
+utils\helpers\gui\Theme
+utils\helpers\gui\GeometryWrap
+utils\helpers\Mutex
