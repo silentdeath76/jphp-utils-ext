@@ -1,7 +1,7 @@
 <?php
 
 
-namespace utils\helpers;
+namespace utils\helpers\gui;
 
 
 use php\io\FileStream;

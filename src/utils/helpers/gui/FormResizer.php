@@ -1,6 +1,6 @@
 <?php
 
-namespace utils\helpers;
+namespace utils\helpers\gui;
 
 
 use php\gui\{event\UXEvent, event\UXMouseEvent, shape\UXRectangle, UXForm, UXImage, UXImageArea, UXNode};
