@@ -2,7 +2,7 @@
 
 namespace utils\helpers\traits;
 
-class Eventable
+trait Eventable
 {
     private $events = [];
 
