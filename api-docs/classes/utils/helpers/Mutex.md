@@ -1,7 +1,12 @@
 # Mutex
 
 - **class** `Mutex` (`utils\helpers\Mutex`)
+- **package** `helpers`
 - **source** `utils/helpers/Mutex.php`
+
+**Description**
+
+Class Mutex
 
 ---
 

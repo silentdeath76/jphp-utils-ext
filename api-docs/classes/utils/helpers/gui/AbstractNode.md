@@ -1,13 +1,18 @@
 # AbstractNode
 
 - **class** `AbstractNode` (`utils\helpers\gui\AbstractNode`)
+- **package** `helpers`
 - **source** `utils/helpers/gui/AbstractNode.php`
+
+**Description**
+
+Class AbstractNode
 
 ---
 
 #### Properties
 
-- `->`[`container`](#prop-container) : `\php\gui\layout\UXPane`
+- `->`[`container`](#prop-container) : `UXPane`
 
 ---
 

@@ -1,7 +1,12 @@
 # Graph
 
 - **class** `Graph` (`utils\graph\Graph`)
+- **package** `helpers`
 - **source** `utils/graph/Graph.php`
+
+**Description**
+
+Class Graph
 
 ---
 

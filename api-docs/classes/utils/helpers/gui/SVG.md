@@ -1,7 +1,12 @@
 # SVG
 
-- **class** `SVG` (`utils\helpers\SVG`)
-- **source** `utils/helpers/SVG.php`
+- **class** `SVG` (`utils\helpers\gui\SVG`)
+- **package** `helpers`
+- **source** `utils/helpers/gui/SVG.php`
+
+**Description**
+
+Class SVG
 
 ---
 

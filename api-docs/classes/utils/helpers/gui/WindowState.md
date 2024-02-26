@@ -1,14 +1,19 @@
 # WindowState
 
 - **class** `WindowState` (`utils\helpers\gui\WindowState`)
+- **package** `helpers`
 - **source** `utils/helpers/gui/WindowState.php`
+
+**Description**
+
+Class WindowState
 
 ---
 
 #### Static Methods
 
 - `WindowState ::`[`load()`](#method-load) - _Загрзука парраметров формы_
-- `WindowState ::`[`multiScreen()`](#method-multiscreen)
+- `WindowState ::`[`screenDetect()`](#method-screendetect)
 - `WindowState ::`[`save()`](#method-save) - _Сохранение парраметров формы_
 
 ---
@@ -24,11 +29,11 @@ WindowState::load(php\gui\UXForm $form, php\util\Configuration $config, mixed $c
 
 ---
 
-<a name="method-multiscreen"></a>
+<a name="method-screendetect"></a>
 
-### multiScreen()
+### screenDetect()
 ```php
-WindowState::multiScreen(php\gui\UXForm $form, php\util\Configuration $config): void
+WindowState::screenDetect(php\gui\UXForm $form, php\util\Configuration $config): void
 ```
 
 ---

@@ -1,7 +1,12 @@
 # Theme
 
-- **class** `Theme` (`utils\helpers\Theme`)
-- **source** `utils/helpers/Theme.php`
+- **class** `Theme` (`utils\helpers\gui\Theme`)
+- **package** `helpers`
+- **source** `utils/helpers/gui/Theme.php`
+
+**Description**
+
+Class Theme
 
 ---
 
@@ -15,6 +20,7 @@
 
 - `Theme ::`[`applyTo()`](#method-applyto)
 - `Theme ::`[`removeFrom()`](#method-removefrom)
+- `Theme ::`[`makeLocalPath()`](#method-makelocalpath)
 - `Theme ::`[`reload()`](#method-reload)
 
 ---
@@ -45,6 +51,15 @@ Theme::applyTo(mixed $target, mixed $path): void
 ### removeFrom()
 ```php
 Theme::removeFrom(mixed $target, mixed $path): void
+```
+
+---
+
+<a name="method-makelocalpath"></a>
+
+### makeLocalPath()
+```php
+Theme::makeLocalPath(mixed $path): string
 ```
 
 ---

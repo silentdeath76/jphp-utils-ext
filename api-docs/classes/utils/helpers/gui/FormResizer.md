@@ -1,7 +1,12 @@
 # FormResizer
 
-- **class** `FormResizer` (`utils\helpers\FormResizer`)
-- **source** `utils/helpers/FormResizer.php`
+- **class** `FormResizer` (`utils\helpers\gui\FormResizer`)
+- **package** `helpers`
+- **source** `utils/helpers/gui/FormResizer.php`
+
+**Description**
+
+Class FormResizer
 
 ---
 
@@ -15,6 +20,7 @@
 - `->`[`screenClickPos`](#prop-screenclickpos) : `mixed`
 - `->`[`items`](#prop-items) : `mixed`
 - `->`[`form`](#prop-form) : `UXForm`
+- `->`[`formSize`](#prop-formsize) : `array`
 
 ---
 
@@ -29,7 +35,7 @@
 
 - `->`[`__construct()`](#method-__construct) - _FormResizer constructor._
 - `->`[`setTitleOutput()`](#method-settitleoutput)
-- `->`[`create()`](#method-create)
+- `->`[`createControls()`](#method-createcontrols)
 - `->`[`enable()`](#method-enable)
 - `->`[`disable()`](#method-disable)
 - `->`[`minSize()`](#method-minsize)
@@ -75,11 +81,11 @@ setTitleOutput(php\gui\UXNode $node): void
 
 ---
 
-<a name="method-create"></a>
+<a name="method-createcontrols"></a>
 
-### create()
+### createControls()
 ```php
-create(): void
+createControls(): void
 ```
 
 ---

@@ -1,7 +1,12 @@
 # TreeHelper
 
 - **class** `TreeHelper` (`utils\helpers\gui\TreeHelper`)
+- **package** `helpers`
 - **source** `utils/helpers/gui/TreeHelper.php`
+
+**Description**
+
+Class TreeHelper
 
 ---
 

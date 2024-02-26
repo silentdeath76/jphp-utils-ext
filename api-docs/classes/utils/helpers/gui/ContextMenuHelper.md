@@ -1,7 +1,12 @@
 # ContextMenuHelper
 
 - **class** `ContextMenuHelper` (`utils\helpers\gui\ContextMenuHelper`)
+- **package** `helpers`
 - **source** `utils/helpers/gui/ContextMenuHelper.php`
+
+**Description**
+
+Class ContextMenuHelper
 
 ---
 

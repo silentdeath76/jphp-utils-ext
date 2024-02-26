@@ -1,7 +1,12 @@
 # GraphNode
 
 - **class** `GraphNode` (`utils\graph\GraphNode`)
+- **package** `helpers`
 - **source** `utils/graph/GraphNode.php`
+
+**Description**
+
+Class GraphNode
 
 ---
 
